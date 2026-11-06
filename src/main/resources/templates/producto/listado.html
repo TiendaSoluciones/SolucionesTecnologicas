@@ -72,6 +72,246 @@
                         </form>
 
                     </div>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Catálogo de productos | Soluciones Tecnológicas</title>
+
+        <!-- Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+              rel="stylesheet">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+        <style>
+            body {
+                background-color: #f5f7fa;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: white;
+            }
+
+            .navbar-brand {
+                color: #1455a0;
+                font-weight: bold;
+            }
+
+            .catalogo-header {
+                background-color: #123c70;
+                color: white;
+                padding: 45px 0;
+            }
+
+            .section-title {
+                color: #173f70;
+                font-weight: bold;
+            }
+
+            .producto-card {
+                border: none;
+                border-radius: 12px;
+                overflow: hidden;
+                height: 100%;
+                transition: 0.3s;
+            }
+
+            .producto-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            }
+
+            .producto-imagen {
+                height: 210px;
+                object-fit: contain;
+                padding: 15px;
+                background-color: white;
+            }
+
+            .producto-precio {
+                color: #1455a0;
+                font-size: 22px;
+                font-weight: bold;
+            }
+
+            .btn-producto {
+                background-color: #1455a0;
+                color: white;
+            }
+
+            .btn-producto:hover {
+                background-color: #123c70;
+                color: white;
+            }
+
+            footer {
+                background-color: #123c70;
+                color: white;
+                padding: 25px;
+                margin-top: 60px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Menú de navegación -->
+        <nav class="navbar navbar-expand-lg shadow-sm">
+            <div class="container">
+
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fa-solid fa-computer"></i>
+                    Soluciones Tecnológicas
+                </a>
+
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#menuPrincipal">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav ms-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}">Inicio</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                               th:href="@{/producto/listado}">
+                                Productos
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               th:href="@{/categoria/listado}">
+                                Categorías
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               th:href="@{/reparacion/servicios}">
+                                Servicios
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Encabezado del catálogo -->
+        <section class="catalogo-header text-center">
+            <div class="container">
+
+                <h1 class="fw-bold">
+                    Nuestro catálogo
+                </h1>
+
+                <p class="mb-0">
+                    Descubre nuestros productos tecnológicos.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- Catálogo -->
+        <main class="container my-5">
+
+            <div class="d-flex justify-content-between
+                 align-items-center mb-4">
+
+                <div>
+                    <h2 class="section-title mb-1">
+                        Productos disponibles
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Explora nuestra selección de productos.
+                    </p>
+                </div>
+
+                <span class="badge bg-primary fs-6"
+                      th:text="${productos != null ? productos.size() : 0} + ' productos'">
+                    0 productos
+                </span>
+
+            </div>
+
+            <!-- Tarjetas de productos -->
+            <div class="row g-4"
+                 th:if="${productos != null and !productos.empty}">
+
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3"
+                     th:each="p : ${productos}"
+                     th:if="${p.activo and p.existencia > 0}">
+
+                    <div class="card producto-card shadow-sm">
+
+                        <!-- Imagen -->
+                        <div class="bg-white text-center">
+
+                            <img th:if="${p.imagen != null and !p.imagen.isEmpty()}"
+                                 th:src="${p.imagen}"
+                                 th:alt="${p.nombre}"
+                                 class="card-img-top producto-imagen">
+
+                            <div th:unless="${p.imagen != null and !p.imagen.isEmpty()}"
+                                 class="producto-imagen d-flex
+                                 align-items-center justify-content-center">
+
+                                <i class="fa-solid fa-image fa-4x text-secondary"></i>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Información -->
+                        <div class="card-body d-flex flex-column">
+
+                            <h5 class="card-title fw-bold"
+                                th:text="${p.nombre}">
+                                Nombre del producto
+                            </h5>
+
+                            <p class="text-muted small"
+                               th:text="${p.categoria != null ? p.categoria.nombre : 'Sin categoría'}">
+                                Categoría
+                            </p>
+
+                            <p class="card-text text-secondary"
+                               th:text="${p.descripcion}">
+                                Descripción del producto
+                            </p>
+
+                            <div class="mt-auto">
+
+                                <p class="producto-precio mb-2">
+                                    ₡<span th:text="${#numbers.formatDecimal(p.precio, 1, 'COMMA', 2, 'POINT')}">
+                                        0.00
+                                    </span>
+                                </p>
+
+                                <span class="badge bg-success mb-3">
+                                    Disponible
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -86,4 +326,46 @@
     </main>
 
 </body>
+</html>
+            <!-- Mensaje cuando no hay productos -->
+            <div class="text-center py-5"
+                 th:if="${productos == null or productos.empty
+                 or productos.?[activo and existencia > 0].empty}">
+
+                <i class="fa-solid fa-box-open fa-4x text-secondary mb-3"></i>
+
+                <h4 class="text-secondary">
+                    No hay productos disponibles
+                </h4>
+
+                <p class="text-muted">
+                    Próximamente tendremos nuevos productos.
+                </p>
+
+            </div>
+
+        </main>
+
+        <!-- Pie de página -->
+        <footer class="text-center">
+            <div class="container">
+
+                <h5>Soluciones Tecnológicas</h5>
+
+                <p class="mb-1">
+                    Tu aliado en tecnología.
+                </p>
+
+                <small>
+                    © 2026 Soluciones Tecnológicas.
+                    Todos los derechos reservados.
+                </small>
+
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+        </script>
+
+    </body>
 </html>
