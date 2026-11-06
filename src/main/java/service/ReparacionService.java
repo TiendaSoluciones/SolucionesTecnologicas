@@ -16,6 +16,11 @@ public class ReparacionService {
         return reparacionRepository.findAll();
     }
 
+    public List<Reparacion> listarPorCliente(Integer clienteId) {
+        return reparacionRepository
+                .findByCliente_IdOrderByFechaSolicitudDesc(clienteId);
+    }
+
     public Reparacion buscarReparacion(Integer id) {
         return reparacionRepository.findById(id).orElse(null);
     }

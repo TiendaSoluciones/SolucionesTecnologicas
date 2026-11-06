@@ -1,15 +1,173 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Solicitar reparación | Soluciones Tecnológicas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .formulario {
+            max-width: 800px;
+            margin: 45px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .titulo {
+            color: #174477;
+        }
+
+        .btn-principal {
+            background: #1455a0;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background: #123c70;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div th:replace="~{general/fragmentos :: menu}"></div>
+
+    <main class="container">
+
+        <div class="formulario">
+
+            <h2 class="titulo fw-bold mb-2">
+                Solicitar reparación
+            </h2>
+
+            <p class="text-muted mb-4">
+                Completa los datos del dispositivo y describe el problema.
+            </p>
+
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <form th:action="@{/reparacion/guardar}"
+                  method="post">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Tipo de dispositivo
+                    </label>
+
+                    <select name="tipoDispositivo"
+                            class="form-select"
+                            required>
+
+                        <option value="">
+                            Selecciona un dispositivo
+                        </option>
+
+                        <option value="Computadora">
+                            Computadora
+                        </option>
+
+                        <option value="Laptop">
+                            Laptop
+                        </option>
+
+                        <option value="Celular">
+                            Celular
+                        </option>
+
+                        <option value="Tablet">
+                            Tablet
+                        </option>
+
+                        <option value="Impresora">
+                            Impresora
+                        </option>
+
+                        <option value="Otro">
+                            Otro
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Marca y modelo
+                    </label>
+
+                    <input type="text"
+                           name="marcaModelo"
+                           class="form-control"
+                           placeholder="Ej. HP Pavilion 15"
+                           maxlength="100"
+                           required>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Descripción del problema
+                    </label>
+
+                    <textarea name="problemaReportado"
+                              class="form-control"
+                              rows="5"
+                              placeholder="Describe detalladamente el problema..."
+                              required></textarea>
+
+                </div>
+
+                <div class="alert alert-info">
+
+                    Al enviar esta solicitud se registrará
+                    tu dispositivo y se creará una reparación
+                    con estado inicial "Recibida".
+
+                </div>
+
+                <div class="d-flex justify-content-between
+                            flex-wrap gap-2">
+
+                    <a th:href="@{/servicios}"
+                       class="btn btn-outline-secondary">
+
+                        Cancelar
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-principal">
+
+                        Enviar solicitud
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
 </html>
