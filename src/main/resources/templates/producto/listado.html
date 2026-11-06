@@ -1,4 +1,77 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de productos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <main class="container py-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Catálogo de productos</h1>
+
+            <a th:href="@{/carrito/listado}" class="btn btn-primary">
+                <i class="bi bi-cart"></i>
+                Ver carrito
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4"
+                 th:each="producto : ${productos}"
+                 th:if="${producto.activo}">
+
+                <div class="card h-100 shadow-sm">
+
+                    <img th:src="${producto.imagen}"
+                         class="card-img-top"
+                         alt="Imagen del producto"
+                         style="height: 220px; object-fit: contain;">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title"
+                            th:text="${producto.nombre}">
+                            Nombre del producto
+                        </h5>
+
+                        <p class="card-text text-muted"
+                           th:text="${producto.descripcion}">
+                            Descripción
+                        </p>
+
+                        <h4 class="text-primary"
+                            th:text="'₡' + ${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">
+                            ₡0.00
+                        </h4>
+
+                        <p>
+                            Existencias:
+                            <span th:text="${producto.existencia}"></span>
+                        </p>
+
+                        <form th:action="@{/carrito/agregar}" method="post">
+
+                            <input type="hidden"
+                                   name="idProducto"
+                                   th:value="${producto.id}">
+
+                            <button type="submit"
+                                    class="btn btn-success w-100"
+                                    th:disabled="${producto.existencia <= 0}">
+                                Agregar al carrito
+                            </button>
+
+                        </form>
+
+                    </div>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org">
 
@@ -261,6 +334,17 @@
                 </div>
             </div>
 
+        </div>
+
+        <div th:if="${#lists.isEmpty(productos)}"
+             class="alert alert-info text-center">
+            No hay productos disponibles.
+        </div>
+
+    </main>
+
+</body>
+</html>
             <!-- Mensaje cuando no hay productos -->
             <div class="text-center py-5 w-100"
                  th:if="${productos == null or productos.empty
