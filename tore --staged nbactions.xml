@@ -1,0 +1,52 @@
+[1mdiff --git a/nbactions.xml b/nbactions.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..41f4262[m
+[1m--- /dev/null[m
+[1m+++ b/nbactions.xml[m
+[36m@@ -0,0 +1,46 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<actions>[m
+[32m+[m[32m    <action>[m
+[32m+[m[32m        <actionName>run</actionName>[m
+[32m+[m[32m        <packagings>[m
+[32m+[m[32m            <packaging>jar</packaging>[m
+[32m+[m[32m        </packagings>[m
+[32m+[m[32m        <goals>[m
+[32m+[m[32m            <goal>spring-boot:run</goal>[m
+[32m+[m[32m        </goals>[m
+[32m+[m[32m        <properties>[m
+[32m+[m[32m            <run.jvmArguments>-noverify -XX:TieredStopAtLevel=1 </run.jvmArguments>[m
+[32m+[m[32m            <run.mainClass>com.solucionestecnologicas.SolucionestecnologicasApplication</run.mainClass>[m
+[32m+[m[32m            <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>[m
+[32m+[m[32m        </properties>[m
+[32m+[m[32m    </action>[m
+[32m+[m[32m    <action>[m
+[32m+[m[32m        <actionName>debug</actionName>[m
+[32m+[m[32m        <packagings>[m
+[32m+[m[32m            <packaging>jar</packaging>[m
+[32m+[m[32m        </packagings>[m
+[32m+[m[32m        <goals>[m
+[32m+[m[32m            <goal>spring-boot:run</goal>[m
+[32m+[m[32m        </goals>[m
+[32m+[m[32m        <properties>[m
+[32m+[m[32m            <run.jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address} -noverify -XX:TieredStopAtLevel=1 </run.jvmArguments>[m
+[32m+[m[32m            <run.mainClass>com.solucionestecnologicas.SolucionestecnologicasApplication</run.mainClass>[m
+[32m+[m[32m            <Env.SPRING_OUTPUT_ANSI_ENABLED>always</Env.SPRING_OUTPUT_ANSI_ENABLED>[m
+[32m+[m[32m            <jpda.listen>true</jpda.listen>[m
+[32m+[m[32m        </properties>[m
+[32m+[m[32m    </action>[m
+[32m+[m[32m    <action>[m
+[32m+[m[32m        <actionName>profile</actionName>[m
+[32m+[m[32m        <packagings>[m
+[32m+[m[32m            <packaging>jar</packaging>[m
+[32m+[m[32m        </packagings>[m
+[32m+[m[32m        <goals>[m
+[32m+[m[32m            <goal>process-classes</goal>[m
+[32m+[m[32m            <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>[m
+[32m+[m[32m        </goals>[m
+[32m+[m[32m        <properties>[m
+[32m+[m[32m            <exec.args>-classpath %classpath com.solucionestecnologicas.SolucionestecnologicasApplication</exec.args>[m
+[32m+[m[32m            <exec.executable>java</exec.executable>[m
+[32m+[m[32m        </properties>[m
+[32m+[m[32m    </action>[m
+[32m+[m[32m</actions>[m
