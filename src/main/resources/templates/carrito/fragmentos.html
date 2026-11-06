@@ -176,13 +176,29 @@
                                 </h5>
                             </div>
 
-                            <button type="button"
-                                    class="btn btn-success w-100"
-                                    th:disabled="${#lists.isEmpty(detalles)}">
-                                <i class="fas fa-check-circle"></i>
-                                Finalizar compra
-                            </button>
+                            <form th:action="@{/pedido/finalizar}" method="post">
 
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label">
+                                        Correo del cliente
+                                    </label>
+
+                                    <input type="email"
+                                           id="correo"
+                                           name="correo"
+                                           class="form-control"
+                                           placeholder="cliente@tienda.com"
+                                           required>
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn-success w-100"
+                                        th:disabled="${#lists.isEmpty(detalles)}">
+                                    <i class="fas fa-check-circle"></i>
+                                    Finalizar compra
+                                </button>
+
+                            </form>
                         </div>
 
                     </div>
