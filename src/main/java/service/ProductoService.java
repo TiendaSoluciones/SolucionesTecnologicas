@@ -16,6 +16,10 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
+    public List<Producto> buscarPorNombre(String nombre) {
+        return productoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
     public Producto buscarProducto(Integer id) {
         return productoRepository.findById(id).orElse(null);
     }
