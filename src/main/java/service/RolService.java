@@ -20,6 +20,10 @@ public class RolService {
         return rolRepository.findById(id).orElse(null);
     }
 
+    public Rol buscarPorNombre(String nombre) {
+        return rolRepository.findByNombre(nombre);
+    }
+
     public void guardarRol(Rol rol) {
         rolRepository.save(rol);
     }

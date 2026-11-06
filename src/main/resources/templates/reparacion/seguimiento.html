@@ -1,15 +1,187 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Seguimiento | Soluciones Tecnológicas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .titulo {
+            color: #174477;
+        }
+
+        .contenedor {
+            max-width: 850px;
+            margin: 45px auto;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .estado {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div th:replace="~{general/fragmentos :: menu}"></div>
+
+    <main class="container contenedor">
+
+        <div class="tarjeta">
+
+            <h2 class="titulo fw-bold mb-2">
+                Seguimiento de reparación
+            </h2>
+
+            <p class="text-muted">
+                Consulta el estado actual de tu solicitud.
+            </p>
+
+            <hr>
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <strong>Número de reparación:</strong>
+
+                    <p th:text="${reparacion.id}">
+                        1
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <strong>Fecha de solicitud:</strong>
+
+                    <p th:text="${#temporals.format(reparacion.fechaSolicitud, 'dd/MM/yyyy HH:mm')}">
+                        Fecha
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <strong>Dispositivo:</strong>
+
+                    <p th:text="${reparacion.dispositivo.tipoDispositivo}">
+                        Computadora
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <strong>Marca y modelo:</strong>
+
+                    <p th:text="${reparacion.dispositivo.marcaModelo}">
+                        HP Pavilion
+                    </p>
+
+                </div>
+
+                <div class="col-12">
+
+                    <strong>Problema reportado:</strong>
+
+                    <p th:text="${reparacion.problemaReportado}">
+                        Descripción
+                    </p>
+
+                </div>
+
+                <div class="col-12">
+
+                    <strong>Estado actual:</strong>
+
+                    <p>
+
+                        <span class="badge bg-primary estado"
+                              th:text="${reparacion.estado}">
+                            Recibida
+                        </span>
+
+                    </p>
+
+                </div>
+
+                <div class="col-12"
+                     th:if="${reparacion.diagnostico != null}">
+
+                    <strong>Diagnóstico técnico:</strong>
+
+                    <p th:text="${reparacion.diagnostico}">
+                        Diagnóstico
+                    </p>
+
+                </div>
+
+                <div class="col-12"
+                     th:if="${reparacion.resultadoTecnico != null}">
+
+                    <strong>Resultado técnico:</strong>
+
+                    <p th:text="${reparacion.resultadoTecnico}">
+                        Resultado
+                    </p>
+
+                </div>
+
+                <div class="col-md-6"
+                     th:if="${reparacion.costo != null}">
+
+                    <strong>Costo:</strong>
+
+                    <p th:text="'₡' + ${#numbers.formatDecimal(reparacion.costo, 1, 'COMMA', 2, 'POINT')}">
+                        ₡0.00
+                    </p>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between
+                        flex-wrap gap-2">
+
+                <a th:href="@{/reparacion/mis-reparaciones}"
+                   class="btn btn-outline-secondary">
+
+                    Volver a mis reparaciones
+
+                </a>
+
+                <a th:href="@{/usuario/perfil}"
+                   class="btn btn-primary">
+
+                    Mi perfil
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
 </html>

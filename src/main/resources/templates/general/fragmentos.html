@@ -1,15 +1,139 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+    <nav th:fragment="menu"
+         class="navbar navbar-expand-lg shadow-sm bg-white">
+
+        <div class="container">
+
+            <a class="navbar-brand fw-bold"
+               style="color: #1455a0;"
+               th:href="@{/}">
+
+                Soluciones Tecnológicas
+
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menuPrincipal">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div class="collapse navbar-collapse"
+                 id="menuPrincipal">
+
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/producto/listado}">
+                            Productos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/categoria/listado}">
+                            Categorías
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/servicios}">
+                            Servicios
+                        </a>
+                    </li>
+
+                    <!-- Opciones para usuarios con sesión -->
+
+                    <li class="nav-item"
+                        th:if="${session.usuarioId != null}">
+
+                        <a class="nav-link"
+                           th:href="@{/usuario/perfil}">
+
+                            Mi perfil
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item"
+                        th:if="${session.usuarioId != null}">
+
+                        <a class="nav-link"
+                           th:href="@{/reparacion/mis-reparaciones}">
+
+                            Mis reparaciones
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item"
+                        th:if="${session.usuarioId != null}">
+
+                        <form th:action="@{/logout}" method="post">
+
+                            <button type="submit"
+                                    class="btn btn-outline-danger btn-sm ms-lg-2">
+
+                                Cerrar sesión
+
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                    <!-- Opciones para visitantes -->
+
+                    <li class="nav-item"
+                        th:if="${session.usuarioId == null}">
+
+                        <a class="nav-link"
+                           th:href="@{/login}">
+
+                            Iniciar sesión
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item"
+                        th:if="${session.usuarioId == null}">
+
+                        <a class="nav-link"
+                           th:href="@{/registro}">
+
+                            Registrarse
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+</body>
 </html>

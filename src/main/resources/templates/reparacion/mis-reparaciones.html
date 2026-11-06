@@ -1,15 +1,173 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mis reparaciones | Soluciones Tecnológicas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .titulo {
+            color: #174477;
+        }
+
+        .tabla-contenedor {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div th:replace="~{general/fragmentos :: menu}"></div>
+
+    <main class="container py-5">
+
+        <div class="d-flex justify-content-between
+                    align-items-center flex-wrap gap-3 mb-4">
+
+            <div>
+
+                <h2 class="titulo fw-bold">
+                    Mis reparaciones
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Consulta las solicitudes que has registrado.
+                </p>
+
+            </div>
+
+            <a th:href="@{/reparacion/nueva}"
+               class="btn btn-primary">
+
+                Nueva reparación
+
+            </a>
+
+        </div>
+
+        <div class="alert alert-success"
+             th:if="${mensaje}"
+             th:text="${mensaje}">
+        </div>
+
+        <div class="tabla-contenedor">
+
+            <!-- Cuando existen reparaciones -->
+            <div class="table-responsive"
+                 th:if="${not #lists.isEmpty(reparaciones)}">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Número</th>
+                            <th>Dispositivo</th>
+                            <th>Problema reportado</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="r : ${reparaciones}">
+
+                            <td th:text="${r.id}">
+                                1
+                            </td>
+
+                            <td>
+
+                                <strong th:text="${r.dispositivo.tipoDispositivo}">
+                                    Computadora
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted"
+                                       th:text="${r.dispositivo.marcaModelo}">
+                                    Marca y modelo
+                                </small>
+
+                            </td>
+
+                            <td th:text="${r.problemaReportado}">
+                                Problema
+                            </td>
+
+                            <td th:text="${#temporals.format(r.fechaSolicitud, 'dd/MM/yyyy HH:mm')}">
+                                Fecha
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-primary"
+                                      th:text="${r.estado}">
+                                    Recibida
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a th:href="@{/reparacion/seguimiento/{id}(id=${r.id})}"
+                                   class="btn btn-outline-primary btn-sm">
+
+                                    Ver seguimiento
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Cuando no existen reparaciones -->
+            <div class="text-center py-5"
+                 th:if="${#lists.isEmpty(reparaciones)}">
+
+                <h4 class="text-secondary">
+                    Todavía no tienes reparaciones.
+                </h4>
+
+                <p class="text-muted">
+                    Cuando registres una solicitud aparecerá aquí.
+                </p>
+
+                <a th:href="@{/reparacion/nueva}"
+                   class="btn btn-primary">
+
+                    Solicitar reparación
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
 </html>
