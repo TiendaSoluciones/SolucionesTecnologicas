@@ -20,6 +20,10 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    public Usuario buscarPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
+    }
+
     public void guardarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
@@ -27,4 +31,5 @@ public class UsuarioService {
     public void eliminarUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
+
 }
